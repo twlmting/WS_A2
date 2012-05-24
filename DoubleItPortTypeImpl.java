@@ -1,5 +1,6 @@
 package service;
 
+import java.awt.Stroke;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -172,5 +173,83 @@ public class DoubleItPortTypeImpl implements DoubleItPortType {
 		}
 		
     	return purchaseResult;
+    }
+    
+    public String storePurchasePattern(int storeID, String patternName, int storeBalance) {
+    	String storePurchaseResult = "Failed to purchase pattern";
+    	
+    	try {
+			Class.forName(driver).newInstance();
+		    con = DriverManager.getConnection(url,user,pass);
+		    
+		    Statement s1 = con.createStatement();
+			s1.executeQuery("SELECT price FROM pattern WHERE pattern_name = '" + patternName + "'");
+			rs = s1.getResultSet();
+			rs.next();
+			int patternPrice = rs.getInt("price");
+			
+		    
+		    if(patternPrice > storeBalance) {
+		    	storePurchaseResult = "Failed to purchase " + patternName + " Reason: Pattern Price is " 
+		    			+ patternPrice + " Your Account Balance " + storeBalance; 
+		    }
+		    else {
+		    	storeBalance = storeBalance - patternPrice;
+		    	Statement s2 = con.createStatement();
+				s2.executeUpdate("UPDATE store SET balance = '" + storeBalance + "' WHERE store_id = '" + storeID + "'");
+		    	
+		    	storePurchaseResult = "Your Store bought the Pattern " + patternName + " and the cost " 
+		    			+ patternPrice + " has deducted from your account";
+		    }
+		}
+		catch(ClassNotFoundException e) {
+			storePurchaseResult = "Cannot Connected to Database";
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return storePurchaseResult;
+    }
+    
+    public int getStoreBalance(int storeID) {
+    	int storeBalance = 0;
+    	
+    	try {
+			Class.forName(driver).newInstance();
+		    con = DriverManager.getConnection(url,user,pass);
+		    
+		    s = con.createStatement();
+			s.executeQuery("SELECT balance FROM store WHERE store_id = '" + storeID + "'");
+			rs = s.getResultSet();
+			
+			if (rs == null) {
+				storeBalance = 0;
+			}
+			else {
+				rs.next();
+				storeBalance = rs.getInt("balance");
+			}
+		}
+		catch(ClassNotFoundException e) {
+			storeBalance = 0;
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return storeBalance;
     }
 }

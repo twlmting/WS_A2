@@ -85,6 +85,40 @@
         				<xsd:element name="purchaseResult" type="xsd:string"></xsd:element>
         			</xsd:sequence>
         		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="storePurchasePattern">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="storeID" type="xsd:int"></xsd:element>
+        				<xsd:element name="patternName"
+        					type="xsd:string">
+        				</xsd:element>
+        				<xsd:element name="storeBalance"
+        					type="xsd:int">
+        				</xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="storePurchasePatternResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="storePurchaseResult" type="xsd:string"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="getStoreBalance">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="storeID" type="xsd:int"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="getStoreBalanceResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="storeBalance" type="xsd:int"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
         	</xsd:element></xsd:schema>
     </wsdl:types>
    <wsdl:message name="DoubleItRequest">
@@ -111,6 +145,18 @@
    <wsdl:message name="customerPurchaseResponse">
    	<wsdl:part name="parameters" element="tns:customerPurchaseResponse"></wsdl:part>
    </wsdl:message>
+   <wsdl:message name="storePurchasePatternRequest">
+   	<wsdl:part name="parameters" element="tns:storePurchasePattern"></wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="storePurchasePatternResponse">
+   	<wsdl:part name="parameters" element="tns:storePurchasePatternResponse"></wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="getStoreBalanceRequest">
+   	<wsdl:part name="parameters" element="tns:getStoreBalance"></wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="getStoreBalanceResponse">
+   	<wsdl:part name="parameters" element="tns:getStoreBalanceResponse"></wsdl:part>
+   </wsdl:message>
    <wsdl:portType name="DoubleItPortType">
       <wsdl:operation name="DoubleIt">
          <wsdl:input message="tns:DoubleItRequest" />
@@ -127,6 +173,14 @@
       <wsdl:operation name="customerPurchase">
       	<wsdl:input message="tns:customerPurchaseRequest"></wsdl:input>
       	<wsdl:output message="tns:customerPurchaseResponse"></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="storePurchasePattern">
+      	<wsdl:input message="tns:storePurchasePatternRequest"></wsdl:input>
+      	<wsdl:output message="tns:storePurchasePatternResponse"></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getStoreBalance">
+      	<wsdl:input message="tns:getStoreBalanceRequest"></wsdl:input>
+      	<wsdl:output message="tns:getStoreBalanceResponse"></wsdl:output>
       </wsdl:operation>
    </wsdl:portType>
    <wsdl:binding name="DoubleItBinding" type="tns:DoubleItPortType">
@@ -148,6 +202,16 @@
          <wsdl:output><soap:body use="literal"/></wsdl:output>
       </wsdl:operation>
       <wsdl:operation name="customerPurchase">
+         <soap:operation soapAction=""/>
+         <wsdl:input><soap:body use="literal"/></wsdl:input>
+         <wsdl:output><soap:body use="literal"/></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="storePurchasePattern">
+         <soap:operation soapAction=""/>
+         <wsdl:input><soap:body use="literal"/></wsdl:input>
+         <wsdl:output><soap:body use="literal"/></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getStoreBalance">
          <soap:operation soapAction=""/>
          <wsdl:input><soap:body use="literal"/></wsdl:input>
          <wsdl:output><soap:body use="literal"/></wsdl:output>
