@@ -43,6 +43,7 @@ public class WSClient {
 			System.out.println("Designer Name: ");
 			Scanner sc1 = new Scanner(System.in);
 			String designerName = sc1.nextLine();
+			displayDesignerPatternSale(port, designerName);
 			System.out.println("New Pattern Name: ");
 			String patternName = sc1.nextLine();
 			System.out.println("New Pattern Price: ");
@@ -99,6 +100,13 @@ public class WSClient {
 		else {
 			System.out.println("You are not a valid user");
 		}
+	}
+
+	private static void displayDesignerPatternSale(DoubleItPortType port,
+			String designerName) {
+		// TODO Auto-generated method stub
+		String resp = port.displayPatternSale(designerName);
+		System.out.println(resp);
 	}
 
 	private static void getStoreBalance(DoubleItPortType port, int storeID) {

@@ -1,6 +1,5 @@
 package service;
 
-import java.awt.Stroke;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -96,7 +95,7 @@ public class DoubleItPortTypeImpl implements DoubleItPortType {
 		    int s = pstmt.executeUpdate();
 		    
 		    if(s > 0) {
-		    	uploadResult = "Pattern " + patternName + " with Price " + patternPrice + " has added to database"; 
+		    	uploadResult = "New Pattern " + patternName + " with Price " + patternPrice + " has added to database"; 
 		    }
 		    else {
 		    	uploadResult = "Pattern didn't add";
@@ -251,5 +250,74 @@ public class DoubleItPortTypeImpl implements DoubleItPortType {
 		}
     	
     	return storeBalance;
+    }
+    
+    public String displayPatternSale(String designerName) {
+    	String patternSaleResult = "Failed to display pattern sold";
+    	int count = 0;
+    	int totalPatternSale = 0;
+    	
+    	try {
+			Class.forName(driver).newInstance();
+		    con = DriverManager.getConnection(url,user,pass);
+		    
+		    Statement s1 = con.createStatement();
+			s1.executeQuery("SELECT designerName FROM pattern, sale WHERE pattern.pattern_name = sale.pattern_name AND designer_name = '" 
+								+ designerName + "'");
+			rs = s1.getResultSet();
+			
+			if(rs == null) {
+				patternSaleResult = "You don't have 5 pattern sales yet";
+			}
+			else {
+				while(rs.next()) {
+					++count;
+				}
+			}
+			
+		    if(count >= 5) {
+		    	Statement s2 = con.createStatement();
+				s2.executeQuery("SELECT price FROM pattern, sale WHERE pattern.pattern_name = sale.pattern_name AND pattern.designer_name = '" 
+									+ designerName + "'");
+				rs = s2.getResultSet();
+				
+				while(rs.next()) {
+					int patternPrice = rs.getInt("price");
+					totalPatternSale = totalPatternSale + patternPrice;
+				}
+				
+				Statement s3 = con.createStatement();
+				s3.executeQuery("SELECT store.name, sale.pattern_name, yarn.price FROM pattern, store, sale, yarn WHERE store.store_id = sale.store_id AND yarn.name = sale.yarn AND sale.pattern_name = pattern.pattern_name WHERE pattern.designer_name = '" 
+									+ designerName + "'");
+				
+				while(rs.next()) {
+					String storeName = rs.getString("store.name");
+					String patternName = rs.getString("sale.pattern_name");
+					int yarnPrice = rs.getInt("yarn.price");
+					
+					patternSaleResult = "Total Amount you have earned " + totalPatternSale + " Store Name " 
+			    			+ storeName + " Pattern Name " + patternName + " $ Value of Yarn " + yarnPrice; 
+				}
+		    	
+		    	
+		    }
+		    else {
+		    	patternSaleResult = "You don't have 5 pattern sales yet";
+		    }
+		}
+		catch(ClassNotFoundException e) {
+			patternSaleResult = "Cannot Connected to Database";
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return patternSaleResult;
     }
 }

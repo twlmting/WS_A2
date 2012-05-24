@@ -119,6 +119,20 @@
         				<xsd:element name="storeBalance" type="xsd:int"></xsd:element>
         			</xsd:sequence>
         		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="displayPatternSale">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="designerName" type="xsd:string"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="displayPatternSaleResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="patternSaleResult" type="xsd:string"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
         	</xsd:element></xsd:schema>
     </wsdl:types>
    <wsdl:message name="DoubleItRequest">
@@ -157,6 +171,12 @@
    <wsdl:message name="getStoreBalanceResponse">
    	<wsdl:part name="parameters" element="tns:getStoreBalanceResponse"></wsdl:part>
    </wsdl:message>
+   <wsdl:message name="displayPatternSaleRequest">
+   	<wsdl:part name="parameters" element="tns:displayPatternSale"></wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="displayPatternSaleResponse">
+   	<wsdl:part name="parameters" element="tns:displayPatternSaleResponse"></wsdl:part>
+   </wsdl:message>
    <wsdl:portType name="DoubleItPortType">
       <wsdl:operation name="DoubleIt">
          <wsdl:input message="tns:DoubleItRequest" />
@@ -181,6 +201,10 @@
       <wsdl:operation name="getStoreBalance">
       	<wsdl:input message="tns:getStoreBalanceRequest"></wsdl:input>
       	<wsdl:output message="tns:getStoreBalanceResponse"></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="displayPatternSale">
+      	<wsdl:input message="tns:displayPatternSaleRequest"></wsdl:input>
+      	<wsdl:output message="tns:displayPatternSaleResponse"></wsdl:output>
       </wsdl:operation>
    </wsdl:portType>
    <wsdl:binding name="DoubleItBinding" type="tns:DoubleItPortType">
@@ -212,6 +236,11 @@
          <wsdl:output><soap:body use="literal"/></wsdl:output>
       </wsdl:operation>
       <wsdl:operation name="getStoreBalance">
+         <soap:operation soapAction=""/>
+         <wsdl:input><soap:body use="literal"/></wsdl:input>
+         <wsdl:output><soap:body use="literal"/></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="displayPatternSale">
          <soap:operation soapAction=""/>
          <wsdl:input><soap:body use="literal"/></wsdl:input>
          <wsdl:output><soap:body use="literal"/></wsdl:output>
