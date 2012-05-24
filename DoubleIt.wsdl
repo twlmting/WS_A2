@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="DoubleIt"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:di="http://www.example.org/schema/DoubleIt"
+   xmlns:tns="http://www.example.org/contract/DoubleIt"
+   targetNamespace="http://www.example.org/contract/DoubleIt">
+   <wsdl:types>
+      <xsd:schema targetNamespace="http://www.example.org/schema/DoubleIt">
+         <xsd:element name="DoubleIt">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="numberToDouble" type="xsd:int"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="DoubleItResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="doubledNumber" type="xsd:int" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/contract/DoubleIt">
+        	<xsd:element name="verifyUser">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="username"
+        					type="xsd:string">
+        				</xsd:element>
+        				<xsd:element name="password"
+        					type="xsd:string">
+        				</xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="verifyUserResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="returnString"
+        					type="xsd:string">
+        				</xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="uploadPattern">
+        		<xsd:complexType>
+        			<xsd:sequence>
+                        <xsd:element name="designerName" type="xsd:string">
+        				</xsd:element>
+                        <xsd:element name="patternName"
+        					type="xsd:string">
+        				</xsd:element>
+        				<xsd:element name="patternPrice"
+        					type="xsd:int">
+        				</xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="uploadPatternResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="uploadResult" type="xsd:string"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="customerPurchase">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="storeID" type="xsd:int"></xsd:element>
+        				<xsd:element name="patternName"
+        					type="xsd:string">
+        				</xsd:element>
+        				<xsd:element name="yarn"
+        					type="xsd:string">
+        				</xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="customerPurchaseResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="purchaseResult" type="xsd:string"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element></xsd:schema>
+    </wsdl:types>
+   <wsdl:message name="DoubleItRequest">
+      <wsdl:part element="di:DoubleIt" name="parameters" />
+   </wsdl:message>
+   <wsdl:message name="DoubleItResponse">
+      <wsdl:part element="di:DoubleItResponse" name="parameters" />
+   </wsdl:message>
+   <wsdl:message name="verifyUserRequest">
+   	<wsdl:part name="parameters" element="tns:verifyUser"></wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="verifyUserResponse">
+   	<wsdl:part name="parameters" element="tns:verifyUserResponse"></wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="uploadPatternRequest">
+   	<wsdl:part name="parameters" element="tns:uploadPattern"></wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="uploadPatternResponse">
+   	<wsdl:part name="parameters" element="tns:uploadPatternResponse"></wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="customerPurchaseRequest">
+   	<wsdl:part name="parameters" element="tns:customerPurchase"></wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="customerPurchaseResponse">
+   	<wsdl:part name="parameters" element="tns:customerPurchaseResponse"></wsdl:part>
+   </wsdl:message>
+   <wsdl:portType name="DoubleItPortType">
+      <wsdl:operation name="DoubleIt">
+         <wsdl:input message="tns:DoubleItRequest" />
+         <wsdl:output message="tns:DoubleItResponse" />
+      </wsdl:operation>
+      <wsdl:operation name="verifyUser">
+      	<wsdl:input message="tns:verifyUserRequest"></wsdl:input>
+      	<wsdl:output message="tns:verifyUserResponse"></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="uploadPattern">
+      	<wsdl:input message="tns:uploadPatternRequest"></wsdl:input>
+      	<wsdl:output message="tns:uploadPatternResponse"></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="customerPurchase">
+      	<wsdl:input message="tns:customerPurchaseRequest"></wsdl:input>
+      	<wsdl:output message="tns:customerPurchaseResponse"></wsdl:output>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="DoubleItBinding" type="tns:DoubleItPortType">
+      <soap:binding style="document"
+         transport="http://schemas.xmlsoap.org/soap/http" />
+      <wsdl:operation name="DoubleIt">
+         <soap:operation soapAction=""/>
+         <wsdl:input><soap:body use="literal"/></wsdl:input>
+         <wsdl:output><soap:body use="literal"/></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="verifyUser">
+         <soap:operation soapAction=""/>
+         <wsdl:input><soap:body use="literal"/></wsdl:input>
+         <wsdl:output><soap:body use="literal"/></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="uploadPattern">
+         <soap:operation soapAction=""/>
+         <wsdl:input><soap:body use="literal"/></wsdl:input>
+         <wsdl:output><soap:body use="literal"/></wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="customerPurchase">
+         <soap:operation soapAction=""/>
+         <wsdl:input><soap:body use="literal"/></wsdl:input>
+         <wsdl:output><soap:body use="literal"/></wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="DoubleItService">
+      <wsdl:port name="DoubleItPort" binding="tns:DoubleItBinding">
+         <soap:address
+            location="http://localhost:8080/doubleit/services/doubleit"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions> 
+
